@@ -7,25 +7,49 @@ import {
 } from "lucide-react";
 import { YT_MUSIC_URL } from "../constants/tracks";
 
-export function TopBar({ timeStr, online }) {
+export function TopBar({ timeStr }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Ambient Garba Circle count
+  const [onlineCount, setOnlineCount] = useState(() =>
+    Math.floor(Math.random() * (48 - 12 + 1)) + 12
+  );
+
+  // Natural updates every 1–2 minutes
+  useEffect(() => {
+    let timer;
+
+    const scheduleNext = () => {
+      const delay = (Math.floor(Math.random() * 61) + 60) * 1000;
+
+      timer = setTimeout(() => {
+        setOnlineCount((prev) => {
+          const next = prev + (Math.random() > 0.5 ? 1 : -1);
+          return Math.max(12, Math.min(48, next));
+        });
+
+        scheduleNext();
+      }, delay);
+    };
+
+    scheduleNext();
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Fullscreen state
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
-    document.addEventListener(
-      "fullscreenchange",
-      handleFullscreenChange
-    );
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
-    return () => {
+    return () =>
       document.removeEventListener(
         "fullscreenchange",
         handleFullscreenChange
       );
-    };
   }, []);
 
   const toggleFullscreen = async () => {
@@ -42,15 +66,13 @@ export function TopBar({ timeStr, online }) {
 
   return (
     <header className="absolute top-0 left-0 right-0 z-20 p-4 md:p-[22px_28px]">
-      {/* Mobile Layout */}
+      {/* Mobile */}
       <div className="md:hidden flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          {/* Time */}
           <div className="flex items-center text-[#fdf6ee] text-sm font-medium px-4 py-2 rounded-full bg-black/30 backdrop-blur-md border border-white/15">
             {timeStr}
           </div>
 
-          {/* Right Controls */}
           <div className="flex items-center gap-2">
             <a
               href={YT_MUSIC_URL}
@@ -77,33 +99,29 @@ export function TopBar({ timeStr, online }) {
           </div>
         </div>
 
-        {/* Garba Circle */}
         <div className="mx-auto flex items-center gap-2 px-4 py-2 rounded-full bg-black/30 backdrop-blur-md border border-white/15">
           <span className="online-dot w-[8px] h-[8px] rounded-full bg-[#3ddc71] shadow-[0_0_8px_#3ddc71]" />
 
-          <span className="text-[#fdf6ee] text-sm font-normal whitespace-nowrap">
-            {online} Joined in Garba Circle
+          <span className="text-[#fdf6ee] text-sm font-normal whitespace-nowrap tabular-nums">
+            {onlineCount} Joined in Garba Circle
           </span>
         </div>
       </div>
 
-      {/* Desktop Layout */}
+      {/* Desktop */}
       <div className="hidden md:flex items-center justify-between">
-        {/* Time */}
         <div className="flex items-center text-[#fdf6ee] text-sm font-medium px-4 py-2 rounded-full bg-black/30 backdrop-blur-md border border-white/15">
           {timeStr}
         </div>
 
-        {/* Center Status */}
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full bg-black/30 backdrop-blur-md border border-white/15">
           <span className="online-dot w-[9px] h-[9px] rounded-full bg-[#3ddc71] shadow-[0_0_8px_#3ddc71]" />
 
-          <span className="text-[#fdf6ee] text-sm font-normal whitespace-nowrap">
-            {online} Joined in Garba Circle
+          <span className="text-[#fdf6ee] text-sm font-normal whitespace-nowrap tabular-nums">
+            {onlineCount} Joined in Garba Circle
           </span>
         </div>
 
-        {/* Right Controls */}
         <div className="flex items-center gap-2.5">
           <a
             href={YT_MUSIC_URL}

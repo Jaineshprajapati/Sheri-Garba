@@ -4,7 +4,6 @@ import { getYouTubePlaylist } from "./services/youtube";
 
 import { usePresenceClock } from "./hooks/usePresenceClock";
 import { useYouTubePlayer } from "./hooks/useYouTubePlayer";
-import { useTabPresence } from "./hooks/useTabPresence";
 
 import { BackgroundScene } from "./components/BackgroundScene";
 import { TopBar } from "./components/TopBar";
@@ -16,8 +15,7 @@ export default function App() {
   // Clock / online status
   // --------------------------------------------------
 
-  const { timeStr } = usePresenceClock();
-  const online = useTabPresence();
+  const { timeStr, online } = usePresenceClock();
 
   // --------------------------------------------------
   // YouTube playlist

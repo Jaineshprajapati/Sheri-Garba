@@ -66,7 +66,7 @@ export function PlayerPill({ playerProps }) {
         absolute
         left-1/2
         -translate-x-1/2
-        md:bottom-[48px]
+        md:bottom-[68px]
 
         flex
         items-center
