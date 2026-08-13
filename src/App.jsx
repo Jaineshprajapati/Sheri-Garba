@@ -4,6 +4,7 @@ import { getYouTubePlaylist } from "./services/youtube";
 
 import { usePresenceClock } from "./hooks/usePresenceClock";
 import { useYouTubePlayer } from "./hooks/useYouTubePlayer";
+import { useTabPresence } from "./hooks/useTabPresence";
 
 import { BackgroundScene } from "./components/BackgroundScene";
 import { TopBar } from "./components/TopBar";
@@ -15,7 +16,8 @@ export default function App() {
   // Clock / online status
   // --------------------------------------------------
 
-  const { timeStr, online } = usePresenceClock();
+  const { timeStr } = usePresenceClock();
+  const online = useTabPresence();
 
   // --------------------------------------------------
   // YouTube playlist
@@ -43,27 +45,18 @@ export default function App() {
         setPlaylistLoading(true);
         setPlaylistError(null);
 
-        const playlistTracks =
-          await getYouTubePlaylist();
+        const playlistTracks = await getYouTubePlaylist();
 
         if (!cancelled) {
-          console.log(
-            "YOUTUBE PLAYLIST:",
-            playlistTracks
-          );
+          console.log("YOUTUBE PLAYLIST:", playlistTracks);
 
           setTracks(playlistTracks);
         }
       } catch (error) {
-        console.error(
-          "YOUTUBE PLAYLIST ERROR:",
-          error
-        );
+        console.error("YOUTUBE PLAYLIST ERROR:", error);
 
         if (!cancelled) {
-          setPlaylistError(
-            "Unable to load music playlist"
-          );
+          setPlaylistError("Unable to load music playlist");
         }
       } finally {
         if (!cancelled) {
@@ -83,10 +76,7 @@ export default function App() {
   // YouTube player
   // --------------------------------------------------
 
-  const playerState = useYouTubePlayer(
-    tracks,
-    playerElRef
-  );
+  const playerState = useYouTubePlayer(tracks, playerElRef);
 
   // --------------------------------------------------
   // Render
@@ -110,32 +100,21 @@ export default function App() {
       <BackgroundScene />
 
       {/* Top Navigation */}
-      <TopBar
-        timeStr={timeStr}
-        online={online}
-      />
+      <TopBar timeStr={timeStr} online={online} />
 
       {/* Ee Halo Button */}
       <EeHaloButton />
 
-      {/* Invisible YouTube Player */}
+      {/* Hidden YouTube IFrame API Player */}
       <div
-        className="
-          absolute
-          w-0
-          h-0
-          overflow-hidden
-        "
+        className="fixed pointer-events-none opacity-0"
+        style={{ width: 1, height: 1 }}
       >
         <div ref={playerElRef} />
       </div>
 
       {/* Music Player */}
-      {tracks.length > 0 && (
-        <PlayerPill
-          playerProps={playerState}
-        />
-      )}
+      {tracks.length > 0 && <PlayerPill playerProps={playerState} />}
 
       {/* Playlist loading */}
       {playlistLoading && (

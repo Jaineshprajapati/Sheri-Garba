@@ -64,10 +64,9 @@ export function PlayerPill({ playerProps }) {
     <div
       className="
         absolute
-        bottom-[64px]
-        md:bottom-[48px]
         left-1/2
         -translate-x-1/2
+        md:bottom-[48px]
 
         flex
         items-center
@@ -92,7 +91,7 @@ export function PlayerPill({ playerProps }) {
 
         shadow-[0_20px_50px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_0_0_rgba(255,255,255,0.25)]
 
-        w-[96vw]
+        w-[92vw]
         md:w-[min(640px,92vw)]
 
         z-20
@@ -100,7 +99,7 @@ export function PlayerPill({ playerProps }) {
         duration-300
       "
       style={{
-        // In case you want extra bump on very small screens, can add inline CSS if needed
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 84px)",
       }}
     >
       {/* =========================
