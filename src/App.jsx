@@ -83,11 +83,7 @@ export default function App() {
   return (
     <div
       className="
-        relative
-        w-full
-        h-screen
-        min-h-[620px]
-        overflow-hidden
+       relative w-full min-h-[100dvh] overflow-hidden
 
         font-['Poppins',sans-serif]
 

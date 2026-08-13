@@ -33,9 +33,7 @@ export function PlayerPill({ playerProps }) {
   const [showVolume, setShowVolume] = useState(false);
   const progressBarRef = useRef(null);
 
-  const progressPct = duration
-    ? (currentTime / duration) * 100
-    : 0;
+  const progressPct = duration ? (currentTime / duration) * 100 : 0;
 
   const handleSeek = (clientX) => {
     const bar = progressBarRef.current;
@@ -44,17 +42,12 @@ export function PlayerPill({ playerProps }) {
 
     const rect = bar.getBoundingClientRect();
 
-    const ratio = Math.min(
-      1,
-      Math.max(0, (clientX - rect.left) / rect.width)
-    );
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
 
     handleSeekTime(ratio * duration);
   };
 
-  const disabledClass = !ready
-    ? "opacity-50 cursor-wait"
-    : "cursor-pointer";
+  const disabledClass = !ready ? "opacity-50 cursor-wait" : "cursor-pointer";
 
   // Custom styles to bump the player up higher in mobile views
   // Tailwind: On mobile (below md), bump higher. On md+ keep as before.
@@ -62,44 +55,9 @@ export function PlayerPill({ playerProps }) {
 
   return (
     <div
-      className="
-        absolute
-        left-1/2
-        -translate-x-1/2
-        md:bottom-[68px]
-
-        flex
-        items-center
-
-        gap-2.5
-        md:gap-4
-
-        bg-white/[0.08]
-        dark:bg-black/[0.28]
-
-        backdrop-blur-2xl
-        backdrop-saturate-200
-
-        border
-        border-white/20
-        border-t-white/35
-
-        rounded-full
-
-        p-2
-        md:p-[10px_20px_10px_12px]
-
-        shadow-[0_20px_50px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.1),inset_0_1px_0_0_rgba(255,255,255,0.25)]
-
-        w-[92vw]
-        md:w-[min(640px,92vw)]
-
-        z-20
-        transition-all
-        duration-300
-      "
+      className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 md:gap-4 bg-gradient-to-br from-[rgba(70,32,22,0.88)] to-[rgba(40,18,12,0.88)] backdrop-blur-md border border-white/12 rounded-full p-2.5 md:p-[12px_20px_12px_12px] shadow-[0_12px_32px_rgba(0,0,0,0.4)] w-[92vw] md:w-[min(640px,92vw)] z-20"
       style={{
-        bottom: "calc(env(safe-area-inset-bottom, 0px) + 84px)",
+        bottom: "calc(env(safe-area-inset-bottom, 0px) + 62px)",
       }}
     >
       {/* =========================
@@ -175,9 +133,7 @@ export function PlayerPill({ playerProps }) {
             drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]
           "
         >
-          {!ready
-            ? "Waiting for music..."
-            : track?.title || "Unknown track"}
+          {!ready ? "Waiting for music..." : track?.title || "Unknown track"}
         </div>
 
         {/* Artist */}
@@ -216,11 +172,7 @@ export function PlayerPill({ playerProps }) {
             handleSeek(e.clientX);
           }}
           onMouseMove={(e) => {
-            if (
-              ready &&
-              e.buttons === 1 &&
-              seeking
-            ) {
+            if (ready && e.buttons === 1 && seeking) {
               handleSeek(e.clientX);
             }
           }}
@@ -302,11 +254,7 @@ export function PlayerPill({ playerProps }) {
 
             ${disabledClass}
           `}
-          title={
-            ready
-              ? "Shuffle"
-              : "Waiting for music..."
-          }
+          title={ready ? "Shuffle" : "Waiting for music..."}
           aria-label="Shuffle track"
           onClick={() => {
             if (ready) {
@@ -314,17 +262,10 @@ export function PlayerPill({ playerProps }) {
             }
           }}
           style={{
-            opacity: !ready
-              ? 0.35
-              : shuffle
-                ? 1
-                : 0.55,
+            opacity: !ready ? 0.35 : shuffle ? 1 : 0.55,
           }}
         >
-          <Shuffle
-            size={14}
-            className="md:w-[15px] md:h-[15px]"
-          />
+          <Shuffle size={14} className="md:w-[15px] md:h-[15px]" />
         </button>
 
         {/* Previous */}
@@ -349,22 +290,14 @@ export function PlayerPill({ playerProps }) {
             ${disabledClass}
           `}
           aria-label="Previous track"
-          title={
-            ready
-              ? "Previous"
-              : "Waiting for music..."
-          }
+          title={ready ? "Previous" : "Waiting for music..."}
           onClick={() => {
             if (ready) {
               advanceTrack(-1);
             }
           }}
         >
-          <SkipBack
-            size={15}
-            className="md:w-4 md:h-4"
-            fill="currentColor"
-          />
+          <SkipBack size={15} className="md:w-4 md:h-4" fill="currentColor" />
         </button>
 
         {/* Play / Pause */}
@@ -400,19 +333,9 @@ export function PlayerPill({ playerProps }) {
             ${disabledClass}
           `}
           onClick={togglePlay}
-          title={
-            !ready
-              ? "Waiting for music..."
-              : isPlaying
-                ? "Pause"
-                : "Play"
-          }
+          title={!ready ? "Waiting for music..." : isPlaying ? "Pause" : "Play"}
           aria-label={
-            !ready
-              ? "Waiting for music"
-              : isPlaying
-                ? "Pause"
-                : "Play"
+            !ready ? "Waiting for music" : isPlaying ? "Pause" : "Play"
           }
         >
           {!ready ? (
@@ -428,16 +351,9 @@ export function PlayerPill({ playerProps }) {
               •••
             </span>
           ) : isPlaying ? (
-            <Pause
-              size={17}
-              fill="currentColor"
-            />
+            <Pause size={17} fill="currentColor" />
           ) : (
-            <Play
-              size={17}
-              fill="currentColor"
-              className="ml-0.5"
-            />
+            <Play size={17} fill="currentColor" className="ml-0.5" />
           )}
         </button>
 
@@ -463,11 +379,7 @@ export function PlayerPill({ playerProps }) {
             ${disabledClass}
           `}
           aria-label="Next track"
-          title={
-            ready
-              ? "Next"
-              : "Waiting for music..."
-          }
+          title={ready ? "Next" : "Waiting for music..."}
           onClick={() => {
             if (ready) {
               advanceTrack(1);
@@ -519,23 +431,13 @@ export function PlayerPill({ playerProps }) {
                 toggleMute();
               }
             }}
-            title={
-              ready
-                ? "Volume"
-                : "Waiting for music..."
-            }
+            title={ready ? "Volume" : "Waiting for music..."}
             aria-label="Toggle mute"
           >
             {muted || volume === 0 ? (
-              <VolumeX
-                size={15}
-                className="md:w-4 md:h-4"
-              />
+              <VolumeX size={15} className="md:w-4 md:h-4" />
             ) : (
-              <Volume2
-                size={15}
-                className="md:w-4 md:h-4"
-              />
+              <Volume2 size={15} className="md:w-4 md:h-4" />
             )}
           </button>
 
@@ -572,11 +474,7 @@ export function PlayerPill({ playerProps }) {
                 max={100}
                 aria-label="Volume slider"
                 value={muted ? 0 : volume}
-                onChange={(e) =>
-                  handleVolumeChange(
-                    Number(e.target.value)
-                  )
-                }
+                onChange={(e) => handleVolumeChange(Number(e.target.value))}
                 className="w-20 cursor-pointer accent-white"
               />
             </div>
