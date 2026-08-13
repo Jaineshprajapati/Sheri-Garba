@@ -1,0 +1,60 @@
+/* =========================================
+   EE HALO CONFETTI
+   ========================================= */
+
+.ee-halo-confetti {
+    position: absolute;
+    top: -30px;
+    border-radius: 2px;
+    background: #f5c26b;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+    animation-name: eeHaloConfetti;
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-fill-mode: forwards;
+}
+
+.ee-halo-confetti:nth-child(5n) {
+    background: #fdf6ee;
+}
+
+.ee-halo-confetti:nth-child(5n + 1) {
+    background: #e63946;
+}
+
+.ee-halo-confetti:nth-child(5n + 2) {
+    background: #ffb703;
+}
+
+.ee-halo-confetti:nth-child(5n + 3) {
+    background: #fb8500;
+}
+
+.ee-halo-confetti:nth-child(5n + 4) {
+    background: #06d6a0;
+}
+
+@keyframes eeHaloConfetti {
+    0% {
+        transform: translateY(-30px) rotate(0deg) translateX(0);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateY(28vh) rotate(180deg) translateX(15px);
+        opacity: 0.95;
+    }
+
+    50% {
+        transform: translateY(58vh) rotate(360deg) translateX(-15px);
+        opacity: 0.9;
+    }
+
+    80% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(108vh) rotate(720deg) translateX(25px);
+        opacity: 0;
+    }
+}
