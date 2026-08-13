@@ -56,11 +56,15 @@ export function PlayerPill({ playerProps }) {
     ? "opacity-50 cursor-wait"
     : "cursor-pointer";
 
+  // Custom styles to bump the player up higher in mobile views
+  // Tailwind: On mobile (below md), bump higher. On md+ keep as before.
+  // bottom-[36px] -> bottom-[64px] on mobile (adjust as needed)
+
   return (
     <div
       className="
         absolute
-        bottom-[36px]
+        bottom-[64px]
         md:bottom-[48px]
         left-1/2
         -translate-x-1/2
@@ -95,6 +99,9 @@ export function PlayerPill({ playerProps }) {
         transition-all
         duration-300
       "
+      style={{
+        // In case you want extra bump on very small screens, can add inline CSS if needed
+      }}
     >
       {/* =========================
           VINYL DISC
