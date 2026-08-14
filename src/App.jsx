@@ -9,6 +9,7 @@ import { BackgroundScene } from "./components/BackgroundScene";
 import { TopBar } from "./components/TopBar";
 import { PlayerPill } from "./components/PlayerPill";
 import { EeHaloButton } from "./components/EeHaloButton";
+import { FooterCredit } from "./components/FooterCredit";
 
 export default function App() {
   // --------------------------------------------------
@@ -151,6 +152,9 @@ export default function App() {
           {playlistError}
         </div>
       )}
+
+      {/* Footer Credit */}
+      <FooterCredit />
     </div>
   );
 }
